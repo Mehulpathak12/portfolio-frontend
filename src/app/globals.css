@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --apple-bg: #fbfbfd;
+  --apple-surface: #ffffff;
+  --apple-surface-elevated: #f5f5f7;
+  --apple-border: #e5e5e7;
+  --apple-border-hover: #d2d2d7;
+  --apple-text-primary: #1d1d1f;
+  --apple-text-secondary: #6e6e73;
+  --apple-text-tertiary: #86868b;
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 85px;
+  background-color: var(--apple-bg);
+  color: var(--apple-text-primary);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--apple-bg);
+  color: var(--apple-text-primary);
+  overflow-x: hidden;
+  letter-spacing: -0.015em;
+  min-height: 100vh;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #fbfbfd;
+}
+::-webkit-scrollbar-thumb {
+  background: #d2d2d7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b5;
+}
+
+/* Apple Buttons & Cards */
+.apple-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e7;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.apple-card:hover {
+  border-color: #d2d2d7;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.apple-card-elevated {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e7;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.apple-edit-btn {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 113, 227, 0.28);
+  color: #0071e3;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.12);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+.apple-edit-btn:hover {
+  background: #0071e3;
+  color: #ffffff;
+  border-color: #0071e3;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.28);
+}
+
+.apple-delete-btn {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.08);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.apple-delete-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.stealth-admin-bar {
+  background: rgba(29, 29, 31, 0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
+}
+
+/* Radial Timeline Styles */
+.radial-timeline-wrapper {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  user-select: none;
+}
+@media (max-width: 640px) {
+  .radial-timeline-wrapper {
+    height: 520px;
+  }
+}
+@media (max-width: 480px) {
+  .radial-timeline-wrapper {
+    height: 480px;
+    min-height: 440px;
+    overflow: hidden;
+  }
+}
+
+.radial-orbit-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.radial-center-core {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0071e3 0%, #6366f1 50%, #06b6d4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  box-shadow: 0 10px 30px rgba(0, 113, 227, 0.25);
+  animation: corePulse 3s ease-in-out infinite;
+}
+
+.radial-center-ping-1 {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 113, 227, 0.35);
+  animation: pingRing 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.radial-center-ping-2 {
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  animation: pingRing 2.4s cubic-bezier(0, 0, 0.2, 1) infinite 0.6s;
+}
+
+.radial-center-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.radial-orbit-ring {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  border: 1.5px dashed #e5e5e7;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .radial-orbit-ring {
+    width: 320px;
+    height: 320px;
+  }
+}
+@media (max-width: 480px) {
+  .radial-orbit-ring {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+.radial-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.radial-node-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.radial-node-title {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+
+.radial-card-popup {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 290px;
+  max-width: calc(100vw - 40px);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid #e5e5e7;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 300;
+  animation: cardFadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.radial-card-pointer {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-top: 1px solid #e5e5e7;
+  border-left: 1px solid #e5e5e7;
+}
+
+@keyframes corePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 24px rgba(0, 113, 227, 0.25);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 12px 36px rgba(0, 113, 227, 0.4);
+  }
+}
+
+@keyframes pingRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  80%, 100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes cardFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -8px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
