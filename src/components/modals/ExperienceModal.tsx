@@ -64,16 +64,55 @@ export default function ExperienceModal() {
 
   if (activeEditModal !== "experience") return null;
 
+  const handleCurrentChange = (checked: boolean) => {
+    if (checked) {
+      setFormData((prev) => ({ ...prev, current: true, endDate: "Present" }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        current: false,
+        endDate: prev.endDate.trim().toLowerCase() === "present" ? "" : prev.endDate,
+      }));
+    }
+  };
+
+  const handleEndDateChange = (val: string) => {
+    const isPresent = val.trim().toLowerCase() === "present";
+    setFormData((prev) => ({
+      ...prev,
+      endDate: val,
+      current: isPresent,
+    }));
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setStatusMessage(null);
 
+    const cleanEndDate = (formData.endDate || "").trim();
+    let isCurrent = Boolean(formData.current);
+    let finalEndDate = cleanEndDate;
+
+    if (cleanEndDate && cleanEndDate.toLowerCase() !== "present") {
+      isCurrent = false;
+      finalEndDate = cleanEndDate;
+    } else if (isCurrent || !cleanEndDate || cleanEndDate.toLowerCase() === "present") {
+      isCurrent = true;
+      finalEndDate = "Present";
+    }
+
+    const payload = {
+      ...formData,
+      current: isCurrent,
+      endDate: finalEndDate,
+    };
+
     try {
       const res = await fetch("/api/admin/experience/save", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -216,11 +255,10 @@ export default function ExperienceModal() {
               </label>
               <input
                 type="text"
-                disabled={formData.current}
-                value={formData.current ? "Present" : formData.endDate}
-                onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                placeholder="Present"
-                className="w-full px-4 py-2.5 text-sm rounded-xl border border-neutral-200 bg-neutral-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all disabled:opacity-50"
+                value={formData.endDate}
+                onChange={(e) => handleEndDateChange(e.target.value)}
+                placeholder="Present or e.g. Dec 2024"
+                className="w-full px-4 py-2.5 text-sm rounded-xl border border-neutral-200 bg-neutral-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
           </div>
@@ -230,11 +268,11 @@ export default function ExperienceModal() {
               type="checkbox"
               id="currentRole"
               checked={formData.current}
-              onChange={(e) => setFormData({ ...formData, current: e.target.checked })}
-              className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-neutral-300"
+              onChange={(e) => handleCurrentChange(e.target.checked)}
+              className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-neutral-300 cursor-pointer"
             />
             <label htmlFor="currentRole" className="text-xs font-medium text-neutral-700 cursor-pointer">
-              I am currently working in this role
+              I am currently working in this role (sets End Date to "Present")
             </label>
           </div>
 

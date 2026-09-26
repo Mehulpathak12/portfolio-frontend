@@ -131,7 +131,7 @@ export default function ExperienceSection() {
                     <div className="flex items-center gap-4 text-xs text-neutral-500">
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5 text-neutral-400" />
-                        <span>{exp.startDate} – {exp.endDate}</span>
+                        <span>{exp.startDate} – {exp.endDate || (exp.current ? "Present" : "")}</span>
                       </div>
                       {exp.location && (
                         <div className="flex items-center gap-1.5">
