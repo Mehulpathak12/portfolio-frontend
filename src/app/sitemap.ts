@@ -1,8 +1,10 @@
 import { MetadataRoute } from "next";
+import { getBackendUrl } from "@/lib/api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://mehulpathak.tech";
   const lastModified = new Date();
+  const backendUrl = getBackendUrl();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -64,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamically verify if blogs section is active before indexing
   let blogRoutes: MetadataRoute.Sitemap = [];
   try {
-    const portfolioRes = await fetch("http://127.0.0.1:8000/api/portfolio", {
+    const portfolioRes = await fetch(`${backendUrl}/api/portfolio`, {
       next: { revalidate: 3600 },
     });
     
@@ -83,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.85,
       });
 
-      const res = await fetch("http://127.0.0.1:8000/api/blogs", {
+      const res = await fetch(`${backendUrl}/api/blogs`, {
         next: { revalidate: 3600 },
       });
       if (res.ok) {

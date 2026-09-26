@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import type { Metadata, ResolvingMetadata } from "next";
 import { ArrowLeft, Clock, Calendar, Tag, Share2, Sparkles, BookOpen, Globe } from "lucide-react";
 import { GitHubIcon, LinkedInIcon, TwitterXIcon } from "@/components/Icons";
+import { getBackendUrl } from "@/lib/api";
 
 interface BlogPageProps {
   params: Promise<{ slug: string }>;
@@ -12,11 +13,12 @@ interface BlogPageProps {
 
 async function getBlogData(slug: string, token?: string) {
   try {
+    const backendUrl = getBackendUrl();
     const headers: Record<string, string> = {};
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
-    const res = await fetch(`http://127.0.0.1:8000/api/blogs/${slug}`, {
+    const res = await fetch(`${backendUrl}/api/blogs/${slug}`, {
       headers,
       cache: "no-store",
     });
