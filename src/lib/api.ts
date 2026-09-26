@@ -10,3 +10,16 @@ export function getBackendUrl(): string {
     "http://127.0.0.1:8000";
   return url.replace(/\/$/, "");
 }
+
+/**
+ * Utility helper to resolve the public production website URL.
+ * Reads the `NEXT_PUBLIC_SITE_URL` environment variable so changing the
+ * domain (e.g. to https://mehulpathak.in) automatically updates metadataBase,
+ * sitemaps, robots.txt, canonical links, OpenGraph, and structured data.
+ */
+export function getSiteUrl(): string {
+  const url =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://mehulpathak.netlify.app";
+  return url.replace(/\/$/, "");
+}

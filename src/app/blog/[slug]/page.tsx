@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import type { Metadata, ResolvingMetadata } from "next";
 import { ArrowLeft, Clock, Calendar, Tag, Share2, Sparkles, BookOpen, Globe } from "lucide-react";
 import { GitHubIcon, LinkedInIcon, TwitterXIcon } from "@/components/Icons";
-import { getBackendUrl } from "@/lib/api";
+import { getBackendUrl, getSiteUrl } from "@/lib/api";
 
 interface BlogPageProps {
   params: Promise<{ slug: string }>;
@@ -48,14 +48,14 @@ export async function generateMetadata(
     };
   }
 
-  const siteUrl = "https://mehulpathak.tech";
+  const siteUrl = getSiteUrl();
   const articleUrl = `${siteUrl}/blog/${blog.slug}`;
   const coverUrl = blog.coverImage?.startsWith("http")
     ? blog.coverImage
-    : `${siteUrl}${blog.coverImage || "/image/project/skill.png"}`;
+    : `${siteUrl}${blog.coverImage || "/og-image.png"}`;
 
   return {
-    title: `${blog.title} | Mehul Pathak`,
+    title: blog.title,
     description: blog.summary,
     keywords: Array.isArray(blog.tags) ? blog.tags : (blog.tags ? blog.tags.split(",") : []),
     alternates: {
@@ -65,7 +65,7 @@ export async function generateMetadata(
       title: blog.title,
       description: blog.summary,
       url: articleUrl,
-      siteName: "Mehul Pathak Portfolio & Engineering Blog",
+      siteName: "Mehul Pathak",
       type: "article",
       publishedTime: blog.createdAt,
       authors: ["Mehul Pathak"],
@@ -226,18 +226,19 @@ export default async function BlogPostPage(props: BlogPageProps) {
     : (blog.tags ? blog.tags.split(",").map((t: string) => t.trim()) : []);
 
   // Schema.org BlogPosting Structured Data
+  const siteUrl = getSiteUrl();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: blog.title,
     description: blog.summary,
-    image: blog.coverImage?.startsWith("http") ? blog.coverImage : `https://mehulpathak.tech${blog.coverImage || "/image/project/skill.png"}`,
+    image: blog.coverImage?.startsWith("http") ? blog.coverImage : `${siteUrl}${blog.coverImage || "/og-image.png"}`,
     datePublished: blog.createdAt || blog.date,
     dateModified: blog.updatedAt || blog.createdAt,
     author: {
       "@type": "Person",
       name: author?.name || "Mehul Pathak",
-      url: author?.website || "https://mehulpathak.tech",
+      url: author?.website || siteUrl,
     },
     publisher: {
       "@type": "Person",
@@ -245,7 +246,7 @@ export default async function BlogPostPage(props: BlogPageProps) {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://mehulpathak.tech/blog/${blog.slug}`,
+      "@id": `${siteUrl}/blog/${blog.slug}`,
     },
   };
 
@@ -255,7 +256,7 @@ export default async function BlogPostPage(props: BlogPageProps) {
   const authorGithub = author?.github || "https://github.com/Mehulpathak12";
   const authorLinkedin = author?.linkedin || "https://www.linkedin.com/in/mehul-2004-10-pathak";
   const authorTwitter = author?.twitter || "https://x.com/mehulpathak2004";
-  const authorWebsite = author?.website || "https://mehulpathak.tech";
+  const authorWebsite = author?.website || siteUrl;
 
   return (
     <article className="min-h-screen bg-[#fbfbfd] text-neutral-900 selection:bg-blue-600 selection:text-white pt-10 pb-24">

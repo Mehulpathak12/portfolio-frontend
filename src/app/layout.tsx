@@ -1,30 +1,32 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { AdminProvider } from "@/context/AdminContext";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { getSiteUrl } from "@/lib/api";
 
-const siteUrl = "https://mehulpathak.tech";
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Mehul Pathak | Full Stack Developer & Applied AI",
+    default: "Mehul Pathak | Software Developer & AI/ML Engineer",
     template: "%s | Mehul Pathak",
   },
   description:
-    "Portfolio of Mehul Pathak — Full Stack Software Developer crafting scalable web applications with React & Node.js, applied AI & RAG pipelines with Python, and Java algorithmic problem solving.",
+    "Mehul Pathak's portfolio — Software Developer and AI/ML Engineer building modern web applications, AI systems, and intelligent software.",
   keywords: [
     "Mehul Pathak",
-    "Mehul Pathak portfolio",
+    "Software Developer",
+    "AI/ML Engineer",
     "Full Stack Developer",
-    "Applied AI Developer",
-    "Python FastAPI Developer",
-    "React Next.js Developer",
+    "React",
+    "Next.js",
+    "FastAPI",
+    "Python",
     "RAG Applications",
     "Java Data Structures and Algorithms",
-    "LeetCode Mehul Pathak",
-    "Software Engineer India",
-    "Ajmer Developer"
+    "Portfolio",
+    "Web Development"
   ],
   authors: [{ name: "Mehul Pathak", url: "https://github.com/Mehulpathak12" }],
   creator: "Mehul Pathak",
@@ -41,26 +43,26 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    title: "Mehul Pathak | Full Stack Developer & Applied AI",
+    title: "Mehul Pathak | Software Developer & AI/ML Engineer",
     description:
-      "Explore full-stack apps, AI & RAG tooling, and software engineering projects by Mehul Pathak.",
-    siteName: "Mehul Pathak Portfolio",
+      "Mehul Pathak's portfolio — Software Developer and AI/ML Engineer building modern web applications, AI systems, and intelligent software.",
+    siteName: "Mehul Pathak",
     images: [
       {
-        url: "/image/about1.jpg",
-        width: 800,
-        height: 1000,
-        alt: "Mehul Pathak - Full Stack & Applied AI Developer",
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Mehul Pathak - Software Developer & AI/ML Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mehul Pathak | Full Stack Developer & Applied AI",
+    title: "Mehul Pathak | Software Developer & AI/ML Engineer",
     description:
-      "Full Stack Software Developer crafting scalable web applications, applied AI & RAG systems, and solving algorithms in Java.",
+      "Mehul Pathak's portfolio — Software Developer and AI/ML Engineer building modern web applications, AI systems, and intelligent software.",
     creator: "@mehulpathak2004",
-    images: ["/image/about1.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -74,9 +76,18 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/image/about1.jpg",
-    shortcut: "/image/about1.jpg",
-    apple: "/image/about1.jpg",
+    icon: [
+      { url: "/image/fav/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/image/fav/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/image/fav/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
   },
 };
 
@@ -87,29 +98,23 @@ const jsonLd = {
       "@type": "Person",
       "@id": `${siteUrl}/#person`,
       "name": "Mehul Pathak",
-      "jobTitle": "Full Stack & Software Developer",
+      "jobTitle": "Software Developer & AI/ML Engineer",
       "url": siteUrl,
-      "image": `${siteUrl}/image/about1.jpg`,
+      "image": `${siteUrl}/og-image.png`,
       "sameAs": [
         "https://github.com/Mehulpathak12",
         "https://www.linkedin.com/in/mehul-2004-10-pathak",
         "https://leetcode.com/u/mehulpathak",
         "https://x.com/mehulpathak2004"
       ],
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "MDS University"
-      },
       "knowsAbout": [
-        "Full Stack Web Development",
+        "Full-Stack Web Development",
         "React",
         "Next.js",
         "Node.js",
         "Python",
         "FastAPI",
-        "Retrieval-Augmented Generation (RAG)",
-        "Artificial Intelligence",
-        "Java",
+        "Applied AI & RAG Tooling",
         "Data Structures and Algorithms",
         "MongoDB Atlas",
         "MySQL",
@@ -120,7 +125,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       "url": siteUrl,
-      "name": "Mehul Pathak Portfolio",
+      "name": "Mehul Pathak",
       "publisher": {
         "@id": `${siteUrl}/#person`
       },
@@ -143,6 +148,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-[#fbfbfd] text-neutral-900">
+        <GoogleAnalytics />
         <AdminProvider>{children}</AdminProvider>
       </body>
     </html>

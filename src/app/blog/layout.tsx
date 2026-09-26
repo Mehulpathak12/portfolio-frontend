@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import NotFound from "@/app/not-found";
-import { getBackendUrl } from "@/lib/api";
+import { getBackendUrl, getSiteUrl } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  title: "Engineering Notes & Technical Blog | Mehul Pathak",
+  title: "Engineering Notes & Technical Blog",
   description:
     "In-depth technical articles, system design insights, applied AI & RAG pipelines, and full-stack software engineering by Mehul Pathak.",
   alternates: {
-    canonical: "https://mehulpathak.tech/blog",
+    canonical: "/blog",
   },
   openGraph: {
     title: "Engineering Notes & Technical Blog | Mehul Pathak",
     description:
       "In-depth technical articles on full-stack web applications, applied AI tooling, and systems architecture by Mehul Pathak.",
-    url: "https://mehulpathak.tech/blog",
+    url: `${siteUrl}/blog`,
     type: "website",
-    siteName: "Mehul Pathak Portfolio & Engineering Blog",
+    siteName: "Mehul Pathak",
     images: [
       {
-        url: "https://mehulpathak.tech/image/about1.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Mehul Pathak Technical Blog",
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     title: "Engineering Notes & Technical Blog | Mehul Pathak",
     description:
       "Technical articles on full-stack architecture, applied AI & RAG pipelines, and modern software engineering.",
-    images: ["https://mehulpathak.tech/image/about1.jpg"],
+    images: ["/og-image.png"],
     creator: "@mehulpathak2004",
   },
 };

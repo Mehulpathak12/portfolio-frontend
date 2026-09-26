@@ -1,6 +1,9 @@
 import { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/api";
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = getSiteUrl();
+
   return {
     rules: [
       {
@@ -9,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api/"],
       },
     ],
-    sitemap: "https://mehulpathak.tech/sitemap.xml",
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
